@@ -37,7 +37,7 @@ function SvillyHUD.new()
     self.Label.Size = UDim2.new(1, 0, 0.0326465215, 0)
     self.Label.Font = Enum.Font.GothamBold
     self.Label.RichText = true
-    self.Label.Text = string.format("%s - <font color='%s'>%s</font>", "Flusin", ToFormat(Color3.fromRGB(155,0,205)), "Kat")
+    self.Label.Text = ""
     self.Label.TextColor3 = Color3.fromRGB(255, 255, 255)
     self.Label.TextScaled = true
     self.Label.TextSize = 14.000
