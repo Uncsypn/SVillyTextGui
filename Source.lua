@@ -55,7 +55,7 @@ function SvillyHUD.new()
     self.List.Size = UDim2.new(1, 0, 1, 0)
     
     self.UIListLayout.Parent = self.List
-    self.UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    self.UIListLayout.SortOrder = Enum.SortOrder.Name
     self.UIListLayout.Padding = UDim.new(0,5)
     
     self.UIPadding.Parent = self.Instance
