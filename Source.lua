@@ -102,14 +102,14 @@ function SvillyHUD.new()
             Item.Name = FrameName
             Item.Parent = self.List
             Item.BackgroundTransparency = 1
-            Item.Size = UDim2.new(10, 0, 0, 0)
+            Item.Size = UDim2.new(1, 0, 0.0290000005, 0)
     
             Line.Name = "Line"
             Line.Parent = Item
             Line.Size = UDim2.new(0.0089999997, 0, 1, 0)
             Line.BorderSizePixel = 0
             Line.BackgroundColor3 = Color
-            Line.BackgroundTransparency = 1
+            Line.BackgroundTransparency = 0
     
             Label.Name = "Label"
             Label.Parent = Item
@@ -124,13 +124,9 @@ function SvillyHUD.new()
             Label.TextSize = 18.000
             Label.TextWrapped = true
             Label.TextXAlignment = Enum.TextXAlignment.Left
-            Label.TextTransparency = 1
+            Label.TextTransparency = 0
     
             Label.Text = LabelText
-    
-            game:GetService("TweenService"):Create(Item,TweenInfo.new(0.165,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Size = UDim2.new(1, 0, 0.0290000005, 0)}):Play()
-            game:GetService("TweenService"):Create(Line,TweenInfo.new(0.2,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{BackgroundTransparency = 0}):Play()
-            game:GetService("TweenService"):Create(Label,TweenInfo.new(0.2,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{TextTransparency = 0}):Play()
     
             self.Items[FrameName] = Item
         else
@@ -159,9 +155,6 @@ function SvillyHUD.new()
     function self:RemoveItem(Name)
         local Item = self.Items[Name]
         if Item then
-            game:GetService("TweenService"):Create(Item,TweenInfo.new(0.3,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Size = UDim2.new(1, 0, 0, 0)}):Play()
-            game:GetService("TweenService"):Create(Item.Line,TweenInfo.new(0.2,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{BackgroundTransparency = 1}):Play()
-            game:GetService("TweenService"):Create(Item.Label,TweenInfo.new(0.2,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{TextTransparency = 1}):Play()
             wait(0.3)
             Item:Destroy()
             self.Items[Name] = nil
