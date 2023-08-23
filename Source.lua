@@ -17,7 +17,7 @@ function SvillyHUD.new()
     self.Items = {}
     
     self.Instance.Name = "SvillyHUD"
-    self.Instance.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    self.Instance.Parent = game:GetService("CoreGui")
     self.Instance.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     
     self.Holder.Name = "Holder"
