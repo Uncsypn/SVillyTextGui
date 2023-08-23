@@ -155,7 +155,6 @@ function SvillyHUD.new()
     function self:RemoveItem(Name)
         local Item = self.Items[Name]
         if Item then
-            wait(0.3)
             Item:Destroy()
             self.Items[Name] = nil
         end
