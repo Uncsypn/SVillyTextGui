@@ -2,7 +2,7 @@
 local HUD = loadstring(game:HttpGet("https://raw.githubusercontent.com/Uncsypn/SVillyTextGui/main/Source.lua"))()
 
 -- Update HUD.
-UpdateHud({
+HUD:UpdateHud({
 	Shadow = true,
 	Logo = false,
 	Enabled = true,
@@ -13,7 +13,7 @@ UpdateHud({
 })
 
 -- Create HUD Item.
-AddItem("Item", {
+HUD:AddItem("Item", {
 	Background = true,
 	Shadow = true,
 	Color = Color3.fromRGB(255, 170, 255),
@@ -23,7 +23,7 @@ AddItem("Item", {
 })
 
 -- Update HUD Item.
-UpdateItem("Item", {
+HUD:UpdateItem("Item", {
 	Background = false,
 	Shadow = false,
 	Color = Color3.fromRGB(0, 170, 255),
@@ -33,4 +33,4 @@ UpdateItem("Item", {
 })
 
 -- Remove HUD Item.
-RemoveItem("Speed")
+HUD:RemoveItem("Item")
