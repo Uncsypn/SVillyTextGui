@@ -160,9 +160,9 @@ function UI:UpdateItem(Name, Table)
 		end
 		if Table.Shadow then
 			if Table.Shadow == true then
-				LogoText.TextStrokeTransparency = 0.85
+				itemInstance.Label.TextStrokeTransparency = 0.85
 			else
-				LogoText.TextStrokeTransparency = 1
+				itemInstance.Label.TextStrokeTransparency = 1
 			end
 		end
 		if Table.Background ~= nil then
