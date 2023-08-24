@@ -34,6 +34,3 @@ UpdateItem("Item", {
 
 -- Remove HUD Item.
 RemoveItem("Speed")
-
--- Destroy HUD.
-getgenv().hud:DestroyHud(true)
