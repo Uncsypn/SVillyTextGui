@@ -7,6 +7,8 @@ UpdateHud({
 	Logo = false,
 	Enabled = true,
 	Color = Color3.fromRGB(255,255,255),
+	Font = Enum.Font.SourceSansBold,
+	RichText = true,
 	Text = string.format("%s <font color='%s'>%s</font>", "SVilly", ToFormat(Color3.fromRGB(255, 170, 255)), "Hud")
 })
 
