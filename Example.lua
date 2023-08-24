@@ -1,6 +1,8 @@
 -- Get The Library Loadstring.
 local HUD = loadstring(game:HttpGet("https://raw.githubusercontent.com/Uncsypn/SVillyTextGui/main/Source.lua"))()
 
+local function ToFormat(color3)return"rgb("..math.floor(math.min(color3.R*255,255))..", "..math.floor(math.min(color3.G*255,255))..", "..math.floor(math.min(color3.B*255,255))..")";end
+
 -- Update HUD.
 HUD:UpdateHud({
 	Shadow = true,
