@@ -8,8 +8,9 @@ local UIListLayout = Instance.new("UIListLayout")
 local UIListLayout_2 = Instance.new("UIListLayout")
 local UIPadding = Instance.new("UIPadding")
 HudText.Name = "HudText"
-HudText.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+HudText.Parent = game:GetService("CoreGui")
 HudText.ZIndexBehavior = Enum.ZIndexBehavior.Global
+HudText.ResetOnSpawn = false
 Holder.Name = "Holder"
 Holder.Parent = HudText
 Holder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -69,7 +70,11 @@ function UI:UpdateHud(Table)
 			LogoText.Text = Table.Text
 		end
 		if Table.Shadow then
-			LogoText.TextStrokeTransparency = Table.Shadow and 0.85 or 1
+			if Table.Shadow == true then
+				LogoText.TextStrokeTransparency = 0.85
+			else
+				LogoText.TextStrokeTransparency = 1
+			end
 		end
 		if Table.Font then
 			LogoText.Font = Table.Font
@@ -109,8 +114,8 @@ function UI:AddItem(Name, Table)
 		LabelInstance.BackgroundTransparency = 1.000
 		LabelInstance.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		LabelInstance.BorderSizePixel = 0
-		LabelInstance.Position = UDim2.new(0, 10, 0, 3)
-		LabelInstance.Size = UDim2.new(1, -20, 1, -6)
+		LabelInstance.Position = UDim2.new(0, 8, 0, 2)
+		LabelInstance.Size = UDim2.new(1, -16, 1, -4)
 		LabelInstance.RichText = Table.RichText or false
 		LabelInstance.Font = Table.Font or Enum.Font.SourceSans
 		LabelInstance.Text = Table.Text or "Label"
@@ -154,8 +159,10 @@ function UI:UpdateItem(Name, Table)
 			end
 		end
 		if Table.Shadow then
-			if itemInstance.Label then
-				itemInstance.Label.TextStrokeTransparency = Table.Shadow and 0.85 or 1
+			if Table.Shadow == true then
+				LogoText.TextStrokeTransparency = 0.85
+			else
+				LogoText.TextStrokeTransparency = 1
 			end
 		end
 		if Table.Background ~= nil then
