@@ -49,7 +49,7 @@ UIPadding.PaddingTop = UDim.new(0, 15)
 local TableOfName = {}
 local TableOfItem = {}
 function UI:ToFormat(color3)return"rgb("..math.floor(math.min(color3.R*255,255))..", "..math.floor(math.min(color3.G*255,255))..", "..math.floor(math.min(color3.B*255,255))..")";end
-function HUD:Destroy() if HudText then HudText:Destroy() end end
+function UI:Destroy() if HudText then HudText:Destroy() end end
 
 function UI:UpdateHud(Table)
 	if Table and Window and Window.Parent and LogoText and LogoText.Parent then
