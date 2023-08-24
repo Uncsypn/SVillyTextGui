@@ -36,4 +36,4 @@ HUD:UpdateItem("Item", {
 HUD:RemoveItem("Item")
 
 -- Destroy HUD.
-HUD:Destroy()
+HUD:DestroyHud()
