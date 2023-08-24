@@ -125,8 +125,7 @@ function UI:AddItem(Name, Table)
 		LabelInstance.TextStrokeTransparency = Table.Shadow and 0.85 or 1
 		LabelInstance.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 		LabelInstance.Name = "Label"
-		ItemInstance.Size = UDim2.new(0, LabelInstance.TextBounds.X + 18, 0.026, 0)
-
+		ItemInstance.Size = UDim2.new(0, LabelInstance.TextBounds.X + 15, 0.026, 0)
 		TableOfItem[Name] = ItemInstance
 	end
 end
