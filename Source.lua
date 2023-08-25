@@ -51,9 +51,17 @@ UIPadding.PaddingTop = UDim.new(0, 15)
 
 local TableOfName = {}
 local TableOfItem = {}
-function UI:ToFormat(color3)
-	return "rgb("..math.floor(math.min(color3.R*255,255))..", "..math.floor(math.min(color3.G*255,255))..", "..math.floor(math.min(color3.B*255,255))..")"
+
+function UI:DualStringHandler(color3)
+	if color3 then
+		return "rgb("..math.floor(math.min(color3.R*255,255))..", "..math.floor(math.min(color3.G*255,255))..", "..math.floor(math.min(color3.B*255,255))..")"
+	end
 end
+
+function UI:DualStrings(Color, Table)
+	return string.format("%s <font color='%s'>%s</font>", Table.LLabel, UI:DualStringHandler(Color), Table.RLabel)
+end
+
 function UI:DestroyHud()
 	if HudText and HudText.Parent then
 		HudText:Destroy() 
@@ -92,6 +100,15 @@ function UI:UpdateHud(Table)
 	end
 end
 
+local function ZIndexAdjuster(String)
+	local number = tonumber(String)
+	if number then
+		return string.rep("_", number)
+	else
+		return ""
+	end
+end
+
 function UI:AddItem(Name, Table)
 	if Window and Window.Parent and Name and TableOfName[Name] == nil then
 		TableOfName[Name] = true
@@ -99,7 +116,7 @@ function UI:AddItem(Name, Table)
 		local LineInstance = Instance.new("Frame")
 		local LabelInstance = Instance.new("TextLabel")
 		ItemInstance.Parent = Window
-		ItemInstance.Name = Name
+		ItemInstance.Name = Table.ZIndex and tonumber(Table.ZIndex) and ZIndexAdjuster(Table.ZIndex) or Name
 		ItemInstance.BackgroundColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
 		ItemInstance.BackgroundTransparency = Table.Background and 0.9 or 1
 		ItemInstance.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -154,6 +171,9 @@ function UI:UpdateItem(Name, Table)
 				itemInstance.Label.Text = Table.Text
 			end
 		end
+		if Table.ZIndex then
+			itemInstance.Name = itemInstance.Name..(Table.ZIndex and tonumber(Table.ZIndex) and ZIndexAdjuster(Table.ZIndex))
+		end
 		if Table.RichText then
 			if itemInstance.Label then
 				itemInstance.Label.RichText = Table.RichText
@@ -184,7 +204,5 @@ function UI:RemoveItem(Name)
 		TableOfName[Name] = nil
 	end
 end
-
-print("FUCKING WHAT?")
 
 return UI
