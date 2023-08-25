@@ -205,6 +205,4 @@ function UI:RemoveItem(Name)
 	end
 end
 
-warn("HUD Loaded.")
-
 return UI
