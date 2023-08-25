@@ -59,7 +59,7 @@ function UI:DualStringHandler(color3)
 end
 
 function UI:DualStrings(Color, Table)
-	return string.format("%s <font color='%s'>%s</font>", Table.LLabel, UI:DualStringHandler(Color), Table.RLabel)
+	return string.format("%s <font color='%s'>%s</font>", Table.LLabel or "", UI:DualStringHandler(Color), Table.RLabel or "")
 end
 
 function UI:DestroyHud()
