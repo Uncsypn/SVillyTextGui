@@ -20,14 +20,7 @@ UI.Frame = Instance.new("Frame")
 UI.this_shit_is_not_funny = Instance.new("UIListLayout")
 UI.how = Instance.new("UIPadding")
 UI.Screen.Name = UI:randomString()
-if gethui and (not KRNL_LOADED) then
-	UI.Screen.Parent = gethui()
-elseif not is_sirhurt_closure and syn and syn.protect_gui then
-	syn.protect_gui(UI.Screen)
-	UI.Screen.Parent = game:GetService("CoreGui")
-else
-	UI.Screen.Parent = game:GetService("CoreGui")
-end
+UI.Screen.Parent = game:GetService("CoreGui")
 UI.Screen.ZIndexBehavior = Enum.ZIndexBehavior.Global
 UI.Screen.ResetOnSpawn = false
 UI.Screen.OnTopOfCoreBlur = true
