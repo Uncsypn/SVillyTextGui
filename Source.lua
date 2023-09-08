@@ -1,56 +1,75 @@
 local UI = {}
 
-local HudText = Instance.new("ScreenGui")
-local Holder = Instance.new("Frame")
-local LogoText = Instance.new("TextLabel")
-local Window = Instance.new("Frame")
-local UIListLayout = Instance.new("UIListLayout")
-local UIListLayout_2 = Instance.new("UIListLayout")
-local UIPadding = Instance.new("UIPadding")
-HudText.Name = "HudText"
-HudText.Parent = game:GetService("CoreGui")
-HudText.ZIndexBehavior = Enum.ZIndexBehavior.Global
-HudText.ResetOnSpawn = false
-Holder.Name = "Holder"
-Holder.Parent = HudText
-Holder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Holder.BackgroundTransparency = 1.000
-Holder.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Holder.BorderSizePixel = 0
-Holder.Size = UDim2.new(0.116890661, 0, 1, 0)
-LogoText.Name = "LogoText"
-LogoText.Parent = Holder
-LogoText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-LogoText.BackgroundTransparency = 1.000
-LogoText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-LogoText.BorderSizePixel = 0
-LogoText.Size = UDim2.new(1, 0, 0.0332810916, 0)
-LogoText.Font = Enum.Font.GothamBold
-LogoText.TextColor3 = Color3.fromRGB(0, 0, 0)
-LogoText.TextScaled = true
-LogoText.TextSize = 14.000
-LogoText.TextWrapped = true
-LogoText.TextXAlignment = Enum.TextXAlignment.Left
-LogoText.TextYAlignment = Enum.TextYAlignment.Top
-Window.Name = "Window"
-Window.Parent = Holder
-Window.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Window.BackgroundTransparency = 1.000
-Window.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Window.BorderSizePixel = 0
-Window.Size = UDim2.new(1, 0, 1, 0)
-UIListLayout.Parent = Window
-UIListLayout.Padding = UDim.new(0, 3)
-UIListLayout.SortOrder = Enum.SortOrder.Name
-UIListLayout_2.Parent = Holder
-UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout_2.Padding = UDim.new(0, 3)
-UIPadding.Parent = HudText
-UIPadding.PaddingLeft = UDim.new(0, 15)
-UIPadding.PaddingTop = UDim.new(0, 15)
+function UI:randomString()
+	local randomlength = math.random(10,100)
+	local array = {}
 
-local TableOfName = {}
-local TableOfItem = {}
+	for i = 1, randomlength do
+		array[i] = string.char(math.random(32, 126))
+	end
+
+	return table.concat(array)
+end
+
+UI.Screen = Instance.new("ScreenGui")
+UI.wtf = Instance.new("UIListLayout")
+UI.Main = Instance.new("Frame")
+UI.Label = Instance.new("TextLabel")
+UI.bro_stop = Instance.new("UIListLayout")
+UI.Frame = Instance.new("Frame")
+UI.this_shit_is_not_funny = Instance.new("UIListLayout")
+UI.how = Instance.new("UIPadding")
+UI.Screen.Name = UI:randomString()
+UI.Screen.Parent = game:GetService("CoreGui")
+UI.Screen.ZIndexBehavior = Enum.ZIndexBehavior.Global
+UI.Screen.ResetOnSpawn = false
+UI.wtf.Name = "wtf"
+UI.wtf.Parent = UI.Screen
+UI.wtf.SortOrder = Enum.SortOrder.LayoutOrder
+UI.wtf.VerticalAlignment = Enum.VerticalAlignment.Center
+UI.Main.Name = "Main"
+UI.Main.Parent = UI.Screen
+UI.Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI.Main.BackgroundTransparency = 1.000
+UI.Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+UI.Main.BorderSizePixel = 0
+UI.Main.Size = UDim2.new(0.188335866, 0, 1, 0)
+UI.Label.Name = "Label"
+UI.Label.Parent = UI.Main
+UI.Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI.Label.BackgroundTransparency = 1.000
+UI.Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
+UI.Label.BorderSizePixel = 0
+UI.Label.Size = UDim2.new(1, 0, 0.0498938411, 0)
+UI.Label.Font = Enum.Font.Unknown
+UI.Label.Text = ""
+UI.Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+UI.Label.TextScaled = true
+UI.Label.TextSize = 14.000
+UI.Label.TextStrokeTransparency = 0.850
+UI.Label.TextWrapped = true
+UI.Label.TextXAlignment = Enum.TextXAlignment.Left
+UI.Label.RichText = true
+UI.bro_stop.Name = "bro_stop"
+UI.bro_stop.Parent = UI.Main
+UI.bro_stop.SortOrder = Enum.SortOrder.LayoutOrder
+UI.Frame.Parent = UI.Main
+UI.Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI.Frame.BackgroundTransparency = 1.000
+UI.Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+UI.Frame.BorderSizePixel = 0
+UI.Frame.LayoutOrder = 1
+UI.Frame.Size = UDim2.new(1, 0, 1, 0)
+UI.this_shit_is_not_funny.Name = "this_shit_is_not_funny"
+UI.this_shit_is_not_funny.Parent = UI.Frame
+UI.this_shit_is_not_funny.SortOrder = Enum.SortOrder.LayoutOrder
+UI.how.Name = "how"
+UI.how.Parent = UI.Screen
+UI.how.PaddingBottom = UDim.new(0, 15)
+UI.how.PaddingLeft = UDim.new(0, 15)
+UI.how.PaddingTop = UDim.new(0, 15)
+
+UI.TableOfItems = {}
 
 function UI:DualStringHandler(color3)
 	if color3 then
@@ -62,147 +81,152 @@ function UI:DualStrings(Color, Table)
 	return string.format("%s <font color='%s'>%s</font>", Table.LLabel or "", UI:DualStringHandler(Color), Table.RLabel or "")
 end
 
-function UI:DestroyHud()
-	if HudText and HudText.Parent then
-		HudText:Destroy() 
-	end
-end
-
-function UI:UpdateHud(Table)
-	if Table and Window and Window.Parent and LogoText and LogoText.Parent then
-		if Table.Color then
-			LogoText.TextColor3 = Table.Color
-		end
-		if Table.RichText then
-			LogoText.RichText = Table.RichText
-		end
+function UI:Refresh(Table)
+	if UI.Label then
 		if Table.Text then
-			LogoText.Text = Table.Text
+			UI.Label.Text = Table.Text
 		end
-		if Table.Shadow then
+		if Table.Shadow ~= nil then
 			if Table.Shadow == true then
-				LogoText.TextStrokeTransparency = 0.85
+				UI.Label.TextStrokeTransparency = 0.85
 			else
-				LogoText.TextStrokeTransparency = 1
+				UI.Label.TextStrokeTransparency = 1
 			end
+		end
+		if Table.Color then
+			UI.Label.TextColor3 = Table.Color
+		end
+		if Table.Visible ~= nil then
+			UI.Label.Visible = Table.Visible
+		end
+		if Table.Enabled ~= nil then
+			UI.Screen.Enabled = Table.Enabled
 		end
 		if Table.Font then
-			LogoText.Font = Table.Font
-		end
-		if Table.Logo then
-			LogoText.Visible = Table.Logo
-		end
-		if Table.Enabled then
-			if HudText then
-				HudText.Enabled = Table.Enabled
-			end
+			UI.Label.Font = Table.Font
 		end
 	end
 end
 
-local function ZIndexAdjuster(String)
-	local number = tonumber(String)
-	if number then
-		return string.rep("_", number)
-	else
-		return ""
-	end
-end
-
-function UI:AddItem(Name, Table)
-	if Window and Window.Parent and Name and TableOfName[Name] == nil then
-		TableOfName[Name] = true
-		local ItemInstance = Instance.new("Frame")
-		local LineInstance = Instance.new("Frame")
-		local LabelInstance = Instance.new("TextLabel")
-		ItemInstance.Parent = Window
-		ItemInstance.Name = Table.ZIndex and tonumber(Table.ZIndex) and ZIndexAdjuster(Table.ZIndex) or Name
-		ItemInstance.BackgroundColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
-		ItemInstance.BackgroundTransparency = Table.Background and 0.9 or 1
-		ItemInstance.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		ItemInstance.BorderSizePixel = 0
-		ItemInstance.Size = UDim2.new(0, 0, 0.026, 0)
-		LineInstance.Parent = ItemInstance
-		LineInstance.BackgroundColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
-		LineInstance.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		LineInstance.BorderSizePixel = 0
-		LineInstance.Size = UDim2.new(0, 3, 1, 0)
-		LineInstance.Name = "Line"
-		LabelInstance.Parent = ItemInstance
-		LabelInstance.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		LabelInstance.BackgroundTransparency = 1.000
-		LabelInstance.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		LabelInstance.BorderSizePixel = 0
-		LabelInstance.Position = UDim2.new(0, 8, 0, 2)
-		LabelInstance.Size = UDim2.new(1, -16, 1, -4)
-		LabelInstance.RichText = Table.RichText or false
-		LabelInstance.Font = Table.Font or Enum.Font.SourceSans
-		LabelInstance.Text = Table.Text or "Label"
-		LabelInstance.TextColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
-		LabelInstance.TextSize = 14.000
-		LabelInstance.TextXAlignment = Enum.TextXAlignment.Left
-		LabelInstance.TextStrokeTransparency = Table.Shadow and 0.85 or 1
-		LabelInstance.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-		LabelInstance.Name = "Label"
-		ItemInstance.Size = UDim2.new(0, LabelInstance.TextBounds.X + 15, 0.026, 0)
-		TableOfItem[Name] = ItemInstance
-	end
-end
-
-function UI:UpdateItem(Name, Table)
-	local itemInstance = TableOfItem[Name]
-	if itemInstance and itemInstance.Parent and Name and TableOfName[Name] then
-		if Table.Color then
-			itemInstance.BackgroundColor3 = Table.Color
-			if itemInstance.Label then
-				itemInstance.Label.TextColor3 = Table.Color
-			end
-			if itemInstance.Line then
-				itemInstance.Line.BackgroundColor3 = Table.Color
-			end
-		end
-		if Table.Font then
-			if itemInstance.Label then
-				itemInstance.Label.Font = Table.Font
-			end
-		end
-		if Table.Text then
-			if itemInstance.Label then
-				itemInstance.Label.Text = Table.Text
-			end
-		end
-		if Table.ZIndex then
-			itemInstance.Name = itemInstance.Name..(Table.ZIndex and tonumber(Table.ZIndex) and ZIndexAdjuster(Table.ZIndex))
-		end
-		if Table.RichText then
-			if itemInstance.Label then
-				itemInstance.Label.RichText = Table.RichText
-			end
-		end
-		if Table.Shadow then
-			if Table.Shadow == true then
-				itemInstance.Label.TextStrokeTransparency = 0.85
-			else
-				itemInstance.Label.TextStrokeTransparency = 1
-			end
-		end
+function UI:Add(Name, Table)
+	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and not UI.TableOfItems[Name] then
+		local ItemFrame = Instance.new("Frame")
+		local ItemLine = Instance.new("Frame")
+		local Label = Instance.new("TextLabel")
+		local LayoutModifier = Instance.new("UIListLayout")
+		ItemFrame.Name = Name
+		ItemFrame.Parent = UI.Frame
+		ItemFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 		if Table.Background ~= nil then
-			itemInstance.BackgroundTransparency = Table.Background and 0.9 or 1
+			if Table.Background == true then
+				ItemFrame.BackgroundTransparency = 0.650
+			else
+				ItemFrame.BackgroundTransparency = 1
+			end
 		end
+		ItemFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		ItemFrame.BorderSizePixel = 0
+		ItemFrame.Position = UDim2.new(0, 0, -0.00106157118, 0)
+		ItemFrame.Size = UDim2.new(0, 0, 0, 0)
+		ItemFrame.LayoutOrder = Table.Order or math.random(0,999999)
+		ItemLine.Parent = ItemFrame
+		ItemLine.BackgroundColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
+		ItemLine.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		ItemLine.BorderSizePixel = 0
+		ItemLine.Size = UDim2.new(0, 2, 1, 0)
+		ItemLine.Name = "Line"
+		ItemLine.LayoutOrder = 0
+		Label.Parent = ItemFrame
+		Label.Text = Table.Text or ""
+		Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Label.BackgroundTransparency = 1.000
+		Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Label.BorderSizePixel = 0
+		Label.Position = UDim2.new(0.103448279, 0, 0, 0)
+		Label.Size = UDim2.new(1, 0, 1, 0)
+		Label.Font = Table.Font or Enum.Font.Unknown
+		Label.TextColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
+		Label.TextSize = 14.000
+		Label.Name = "Label"
+		Label.RichText = true
+		Label.LayoutOrder = 1
+		if Table.Shadow ~= nil then
+			if Table.Shadow == true then
+				Label.TextStrokeTransparency = 0.850
+			else
+				Label.TextStrokeTransparency = 1
+			end
+		end
+		Label.TextXAlignment = Enum.TextXAlignment.Left
+		LayoutModifier.Parent = ItemFrame
+		LayoutModifier.FillDirection = Enum.FillDirection.Horizontal
+		LayoutModifier.SortOrder = Enum.SortOrder.LayoutOrder
+		LayoutModifier.Padding = UDim.new(0, 8)
 
+		ItemFrame.Size = UDim2.new(0, Label.TextBounds.X + 18, 0.0318471342, 0)
+		UI.TableOfItems[Name] = ItemFrame
+	end
+end
+
+function UI:Update(Name, Table)
+	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
+		if Table.Background ~= nil then
+			if Table.Background == true then
+				UI.TableOfItems[Name].BackgroundTransparency = 0.650
+			else
+				UI.TableOfItems[Name].BackgroundTransparency = 1
+			end
+		end
+		if Table.Color then
+			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
+			local line = UI.TableOfItems[Name]:FindFirstChild("Line")
+			if label then
+				label.TextColor3 = Table.Color
+			end
+			if line then
+				line.BackgroundColor3 = Table.Color
+			end
+		end
+		if Table.Font then
+			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
+			if label then
+				label.Font = Table.Font
+			end
+		end
+		if Table.Shadow ~= nil then
+			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
+			if label then
+				if Table.Shadow == true then
+					label.TextStrokeTransparency = 0.850
+				else
+					label.TextStrokeTransparency = 1
+				end
+			end
+		end
+		if Table.Text then
+			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
+			if label then
+				label.Text = Table.Text
+			end
+		end
+		if Table.Order and tonumber(Table.Order) then
+			UI.TableOfItems[Name].LayoutOrder = Table.Order
+		end
 		pcall(function()
-			itemInstance.Size = UDim2.new(0, itemInstance.Label.TextBounds.X + 18, 0.026, 0)
+			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
+			if label then
+				UI.TableOfItems[Name].Size = UDim2.new(0, label.TextBounds.X + 18, 0.0318471342, 0)
+			end
 		end)
 	end
 end
 
-function UI:RemoveItem(Name)
-	local itemInstance = TableOfItem[Name]
-	if itemInstance and itemInstance.Parent and Name and TableOfName[Name] then
-		itemInstance:Destroy()
-		TableOfItem[Name] = nil
-		TableOfName[Name] = nil
+function UI:Remove(Name)
+	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
+		UI.TableOfItems[Name]:Destroy()
+		UI.TableOfItems[Name] = nil
 	end
 end
+
 
 return UI
