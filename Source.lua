@@ -61,6 +61,7 @@ UI.Frame.BackgroundTransparency = 1.000
 UI.Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 UI.Frame.BorderSizePixel = 0
 UI.Frame.LayoutOrder = 1
+UI.Frame.Name = "LayoutMod"
 UI.Frame.Size = UDim2.new(1, 0, 1, 0)
 UI.this_shit_is_not_funny.Name = "this_shit_is_not_funny"
 UI.this_shit_is_not_funny.Parent = UI.Frame
@@ -72,15 +73,58 @@ UI.how.PaddingLeft = UDim.new(0, 15)
 UI.how.PaddingTop = UDim.new(0, 15)
 
 UI.TableOfItems = {}
+UI.Settings = {Size = {isize=13,Padding=5,vsize=0.0218471342}}
 
-function UI:DualStringHandler(color3)
+function DualStringHandler(color3)
 	if color3 then
 		return "rgb("..math.floor(math.min(color3.R*255,255))..", "..math.floor(math.min(color3.G*255,255))..", "..math.floor(math.min(color3.B*255,255))..")"
 	end
 end
 
 function UI:DualStrings(Color, Table)
-	return string.format("%s <font color='%s'>%s</font>", Table.LLabel or "", UI:DualStringHandler(Color), Table.RLabel or "")
+	if Table.RLabel then
+		return string.format("%s <font color='%s'>%s</font>", Table.LLabel or "", DualStringHandler(Color), Table.RLabel or "")
+	else
+		return Table.LLabel
+	end
+end
+
+local function compareByLength(a, b)
+	return string.len(a) > string.len(b)
+end
+
+function UI:UpdateLayoutOrder()
+	local layouts = {}
+	for _, elements in pairs(UI.TableOfItems) do
+		local label = elements.Label
+		layouts[label.Text] = label
+	end
+	local sortedLabels = {}
+	for _, label in pairs(layouts) do
+		table.insert(sortedLabels, label)
+	end
+	table.sort(sortedLabels, function(a, b)
+		return string.len(a.Text) > string.len(b.Text)
+	end)
+	for index, label in ipairs(sortedLabels) do
+		local itemFrame = label.Parent
+		itemFrame.LayoutOrder = index - 1
+	end
+end
+
+UI.Loop = nil
+
+function UI:RefreshLayoutOrder(Bool)
+	if Bool == true then
+		UI.Loop = game:GetService("RunService").Heartbeat:Connect(function()
+			UI:UpdateLayoutOrder()
+		end)
+	elseif Bool == false then
+		if UI.Loop ~= nil then
+			UI.Loop:Disconnect()
+			UI.Loop = nil
+		end
+	end
 end
 
 function UI:Refresh(Table)
@@ -112,33 +156,33 @@ end
 
 function UI:Add(Name, Table)
 	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and not UI.TableOfItems[Name] then
-		local ItemFrame = Instance.new("Frame")
+		UI.TableOfItems[Name] = Instance.new("Frame")
 		local ItemLine = Instance.new("Frame")
 		local Label = Instance.new("TextLabel")
 		local LayoutModifier = Instance.new("UIListLayout")
-		ItemFrame.Name = Name
-		ItemFrame.Parent = UI.Frame
-		ItemFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+		UI.TableOfItems[Name].Name = Name
+		UI.TableOfItems[Name].Parent = UI.Frame
+		UI.TableOfItems[Name].BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 		if Table.Background ~= nil then
 			if Table.Background == true then
-				ItemFrame.BackgroundTransparency = 0.650
+				UI.TableOfItems[Name].BackgroundTransparency = 0.650
 			else
-				ItemFrame.BackgroundTransparency = 1
+				UI.TableOfItems[Name].BackgroundTransparency = 1
 			end
 		end
-		ItemFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		ItemFrame.BorderSizePixel = 0
-		ItemFrame.Position = UDim2.new(0, 0, -0.00106157118, 0)
-		ItemFrame.Size = UDim2.new(0, 0, 0, 0)
-		ItemFrame.LayoutOrder = Table.Order or math.random(0,999999)
-		ItemLine.Parent = ItemFrame
+		UI.TableOfItems[Name].BorderColor3 = Color3.fromRGB(0, 0, 0)
+		UI.TableOfItems[Name].BorderSizePixel = 0
+		UI.TableOfItems[Name].Position = UDim2.new(0, 0, -0.00106157118, 0)
+		UI.TableOfItems[Name].Size = UDim2.new(0, 0, 0, 0)
+		UI.TableOfItems[Name].ClipsDescendants = true
+		ItemLine.Parent = UI.TableOfItems[Name]
 		ItemLine.BackgroundColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
 		ItemLine.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		ItemLine.BorderSizePixel = 0
 		ItemLine.Size = UDim2.new(0, 2, 1, 0)
 		ItemLine.Name = "Line"
 		ItemLine.LayoutOrder = 0
-		Label.Parent = ItemFrame
+		Label.Parent = UI.TableOfItems[Name]
 		Label.Text = Table.Text or ""
 		Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		Label.BackgroundTransparency = 1.000
@@ -160,18 +204,32 @@ function UI:Add(Name, Table)
 			end
 		end
 		Label.TextXAlignment = Enum.TextXAlignment.Left
-		LayoutModifier.Parent = ItemFrame
+		LayoutModifier.Parent = UI.TableOfItems[Name]
 		LayoutModifier.FillDirection = Enum.FillDirection.Horizontal
 		LayoutModifier.SortOrder = Enum.SortOrder.LayoutOrder
-		LayoutModifier.Padding = UDim.new(0, 8)
+		LayoutModifier.Padding = UDim.new(0, UI.Settings.Size.Padding)
 
-		ItemFrame.Size = UDim2.new(0, Label.TextBounds.X + 18, 0.0318471342, 0)
-		UI.TableOfItems[Name] = ItemFrame
+		if Table.Order then
+			if tonumber(Table.Order) then
+				UI.TableOfItems[Name].LayoutOrder = Table.Order
+			elseif Table.Order == "Manual" then
+				UI:UpdateLayoutOrder()
+			end
+		end
+		
+		if Table.Smooth ~= nil then
+			if Table.Smooth == true then
+				UI.TableOfItems[Name].Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)
+				game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, Label.TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
+			else
+				UI.TableOfItems[Name].Size = UDim2.new(0, Label.TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
+			end
+		end
 	end
 end
 
 function UI:Update(Name, Table)
-	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
+	if Name and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
 		if Table.Background ~= nil then
 			if Table.Background == true then
 				UI.TableOfItems[Name].BackgroundTransparency = 0.650
@@ -211,24 +269,55 @@ function UI:Update(Name, Table)
 				label.Text = Table.Text
 			end
 		end
-		if Table.Order and tonumber(Table.Order) then
-			UI.TableOfItems[Name].LayoutOrder = Table.Order
+		if Table.Order then
+			if tonumber(Table.Order) then
+				UI.TableOfItems[Name].LayoutOrder = Table.Order
+			elseif Table.Order == "Manual" then
+				UI:UpdateLayoutOrder()
+			end
 		end
 		pcall(function()
 			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
 			if label then
-				UI.TableOfItems[Name].Size = UDim2.new(0, label.TextBounds.X + 18, 0.0318471342, 0)
+				if Table.Smooth ~= nil then
+					if Table.Smooth == true then
+						game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, UI.TableOfItems[Name]:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
+					else
+						UI.TableOfItems[Name].Size = UDim2.new(0, UI.TableOfItems[Name]:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
+					end
+				end
 			end
 		end)
+	else
+		-- warn("Item Does Not Exist:", Name or nil)
 	end
 end
 
-function UI:Remove(Name)
-	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
-		UI.TableOfItems[Name]:Destroy()
-		UI.TableOfItems[Name] = nil
+function UI:Remove(Name, Table)
+	if Name and Name ~= "" and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
+		if Table.Smooth == true then
+			local tween = game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)})
+			tween:Play()
+			tween.Completed:Connect(function()
+				game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0)}):Play()
+				wait(0.15)
+				UI.TableOfItems[Name]:Destroy()
+				UI.TableOfItems[Name] = nil
+			end)
+		else
+			UI.TableOfItems[Name]:Destroy()
+			UI.TableOfItems[Name] = nil
+		end
 	end
 end
 
+
+function UI:Clear()
+	pcall(function()
+		UI:RefreshLayoutOrder(false)
+		table.clear(UI.TableOfItems)
+		UI.Screen:Destroy()
+	end)
+end
 
 return UI
