@@ -1,6 +1,9 @@
 -- Define Library.
 local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Uncsypn/SVillyTextGui/main/Source.lua"))()
 
+-- Custom Settings.
+UI.Settings = {Size = {isize=13,Padding=5,vsize=0.0218471342}}
+
 -- Update Window.
 UI:Refresh({
 	Enabled = true,
@@ -16,9 +19,9 @@ UI:Add("Item",{
 	Background = true,
 	Shadow = true,
 	Smooth = false,
-	Font = Enum.Font.SourceSans,
 	Color = Color3.fromRGB(255, 255, 255),
 	Order = "Manual",
+	Font = Enum.Font.SourceSans,
 	Text = UI:DualStrings(Color3.fromRGB(255, 0, 0), {LLabel = "String1", RLabel = "String2"}),
 })
 
@@ -27,9 +30,9 @@ UI:Update("Item",{
 	Background = true,
 	Shadow = false,
 	Smooth = true,
-	Font = Enum.Font.SourceSansSemibold,
 	Color = Color3.fromRGB(255, 0, 0),
 	Order = 1,
+	Font = Enum.Font.SourceSansSemibold,
 	Text = "String3",
 })
 
