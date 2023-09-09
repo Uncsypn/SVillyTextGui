@@ -1,33 +1,46 @@
--- Get The Library Loadstring.
+-- Define Library.
 local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Uncsypn/SVillyTextGui/main/Source.lua"))()
 
--- Updates The TextGui Properties.
+-- Update Window.
 UI:Refresh({
-	Shadow = false, -- Logo Text's Shadow.
-	Color = Color3.fromRGB(255, 255, 255), -- Logo Text's Color.
-	Font = Enum.Font.GothamBold, -- Logo Text's Font.
-	Text = "TEXTGUI", -- Logo Text's Text.
+	Enabled = true,
+	Visible = true,
+	Shadow = true,
+	Color = Color3.fromRGB(255, 255, 255),
+	Font = Enum.Font.SourceSansBold,
+	Text = UI:DualStrings(Color3.fromRGB(255, 0, 0), {LLabel = "Text", RLabel = "Gui"}),
 })
 
--- Add A New Item
-UI:Add("Item", {
-	Background = false, -- Item's Background.
-	Shadow = true, -- Item's Shadow.
-	Color = Color3.fromRGB(255, 255, 255), -- Item's Color.
-	Font = Enum.Font.Gotham, -- Item's Text Font.
-	Order = 0, -- Layout Order. (Higher Number Will Moves It Lower)
-	Text = UI:DualStrings(Color3.fromRGB(255, 170, 255), {LLabel = "String1", RLabel = "String2"}), -- Item's Text.
+-- Add Item.
+UI:Add("Item",{
+	Background = true,
+	Shadow = true,
+	Smooth = false,
+	Font = Enum.Font.SourceSans,
+	Color = Color3.fromRGB(255, 255, 255),
+	Order = "Manual",
+	Text = UI:DualStrings(Color3.fromRGB(255, 0, 0), {LLabel = "String1", RLabel = "String2"}),
 })
 
--- Update An Existing Item (Same With The Add But Update)
-UI:Update("Item", {
+-- Update Item.
+UI:Update("Item",{
 	Background = true,
 	Shadow = false,
-	Color = Color3.fromRGB(255, 170, 255),
-	Font = Enum.Font.GothamBold,
+	Smooth = true,
+	Font = Enum.Font.SourceSansSemibold,
+	Color = Color3.fromRGB(255, 0, 0),
 	Order = 1,
-	Text = UI:DualStrings(Color3.fromRGB(255, 255, 255), {LLabel = "String3", RLabel = "String4"}),
+	Text = "String3",
 })
 
--- Remove The Item.
-UI:Remove("Item")
+-- Remove Item.
+UI:Remove("Item", {Smooth = true})
+
+-- Update LayoutOrder.
+UI:UpdateLayoutOrder()
+
+-- Loop LayoutOrder.
+UI:RefreshLayoutOrder(true)
+
+-- Deletes UI.
+UI:Clear()
