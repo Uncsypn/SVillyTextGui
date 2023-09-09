@@ -295,21 +295,22 @@ end
 
 function UI:Remove(Name, Table)
 	if Name and Name ~= "" and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
+		local Target = UI.TableOfItems[Name]
 		if Table.Smooth == true then
 			local tween = game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)})
 			tween:Play()
 			tween.Completed:Connect(function()
-				if UI.TableOfItems[Name] then
-					pcall(function()
+				pcall(function()
+					if Target then
 						game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0)}):Play()
-						wait(0.15)
-						UI.TableOfItems[Name]:Destroy()
-						UI.TableOfItems[Name] = nil
-					end)
-				end
+						wait(0.05)
+						Target:Destroy()
+						Target = nil
+					end
+				end)
 			end)
 		else
-			UI.TableOfItems[Name]:Destroy()
+			Target:Destroy()
 			UI.TableOfItems[Name] = nil
 		end
 	end
