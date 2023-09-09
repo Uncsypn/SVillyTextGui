@@ -216,7 +216,7 @@ function UI:Add(Name, Table)
 				UI:UpdateLayoutOrder()
 			end
 		end
-		
+
 		if Table.Smooth ~= nil then
 			if Table.Smooth == true then
 				UI.TableOfItems[Name].Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)
@@ -299,10 +299,14 @@ function UI:Remove(Name, Table)
 			local tween = game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)})
 			tween:Play()
 			tween.Completed:Connect(function()
-				game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0)}):Play()
-				wait(0.15)
-				UI.TableOfItems[Name]:Destroy()
-				UI.TableOfItems[Name] = nil
+				if UI.TableOfItems[Name] then
+					pcall(function()
+						game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0)}):Play()
+						wait(0.15)
+						UI.TableOfItems[Name]:Destroy()
+						UI.TableOfItems[Name] = nil
+					end)
+				end
 			end)
 		else
 			UI.TableOfItems[Name]:Destroy()
