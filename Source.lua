@@ -160,6 +160,7 @@ function UI:Add(Name, Table)
 		local ItemLine = Instance.new("Frame")
 		local Label = Instance.new("TextLabel")
 		local LayoutModifier = Instance.new("UIListLayout")
+		local PaddingModifier = Instance.new("UIPadding")
 		UI.TableOfItems[Name].Name = Name
 		UI.TableOfItems[Name].Parent = UI.Frame
 		UI.TableOfItems[Name].BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -207,7 +208,10 @@ function UI:Add(Name, Table)
 		LayoutModifier.Parent = UI.TableOfItems[Name]
 		LayoutModifier.FillDirection = Enum.FillDirection.Horizontal
 		LayoutModifier.SortOrder = Enum.SortOrder.LayoutOrder
+		LayoutModifier.VerticalAlignment = Enum.VerticalAlignment.Center
 		LayoutModifier.Padding = UDim.new(0, UI.Settings.Size.Padding)
+		PaddingModifier.Name = "PaddingModifier"
+		PaddingModifier.Parent = UI.TableOfItems[Name]
 
 		if Table.Order then
 			if tonumber(Table.Order) then
@@ -294,8 +298,8 @@ function UI:Update(Name, Table)
 end
 
 function UI:Remove(Name, Table)
-	if Name and Name ~= "" and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
-		local Target = UI.TableOfItems[Name]
+	local Target = UI.TableOfItems[Name]
+	if Name and Name ~= "" and UI.Frame and UI.Frame.Parent and Target then
 		if Table.Smooth == true then
 			local tween = game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)})
 			tween:Play()
@@ -316,6 +320,162 @@ function UI:Remove(Name, Table)
 	end
 end
 
+function UI:UpdateAll(Table)
+	for i,v in pairs(UI.TableOfItems) do
+		if v and v.Parent and v:IsA("Frame") then
+			if Table.Background ~= nil then
+				if Table.Background == true then
+					v.BackgroundTransparency = 0.650
+				else
+					v.BackgroundTransparency = 1
+				end
+			end
+			if Table.Color then
+				local label = v:FindFirstChild("Label")
+				local line = v:FindFirstChild("Line")
+				if label then
+					label.TextColor3 = Table.Color
+				end
+				if line then
+					line.BackgroundColor3 = Table.Color
+				end
+			end
+			if Table.Font then
+				local label = v:FindFirstChild("Label")
+				if label then
+					label.Font = Table.Font
+				end
+			end
+			if Table.Shadow ~= nil then
+				local label = v:FindFirstChild("Label")
+				if label then
+					if Table.Shadow == true then
+						label.TextStrokeTransparency = 0.850
+					else
+						label.TextStrokeTransparency = 1
+					end
+				end
+			end
+			if Table.Order then
+				if tonumber(Table.Order) then
+					v.LayoutOrder = Table.Order
+				elseif Table.Order == "Manual" then
+					UI:UpdateLayoutOrder()
+				end
+			end
+			pcall(function()
+				local label = v:FindFirstChild("Label")
+				if label then
+					if Table.Smooth ~= nil then
+						if Table.Smooth == true then
+							game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
+						else
+							v.Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
+						end
+					end
+				end
+			end)
+		end
+	end
+end
+
+function UI:RemoveAll(Table)
+	for i,v in pairs(UI.TableOfItems) do
+		if v and v.Parent and v:IsA("Frame") then
+			if Table.Smooth == true then
+				local tween = game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)})
+				tween:Play()
+				tween.Completed:Connect(function()
+					pcall(function()
+						if v then
+							game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0)}):Play()
+							wait(0.05)
+							v:Destroy()
+							v = nil
+						end
+					end)
+				end)
+			else
+				v:Destroy()
+				v = nil
+			end
+		end
+	end
+end
+
+function UI:Design(Type, Table)
+	if Type == "Basic" then
+		for i,v in pairs(UI.TableOfItems) do
+			if v and v.Parent and v:IsA("Frame") then
+				if Table.Smooth ~= nil then
+					if Table.Smooth == true then
+						game:GetService("TweenService"):Create(v.PaddingModifier, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {PaddingLeft = UDim.new(0,0)}):Play()
+						game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
+						game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
+						if v.Line then
+							game:GetService("TweenService"):Create(v.Line, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 2, 1, 0)}):Play()
+							if v.Line:FindFirstChildWhichIsA("UICorner") then
+								local tween = game:GetService("TweenService"):Create(v.Line:FindFirstChildWhichIsA("UICorner"), TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CornerRadius = UDim.new(0, 0)})
+								tween:Play()
+								tween.Completed:Connect(function()pcall(function()v.Line:FindFirstChildWhichIsA("UICorner"):Destroy()end)end)
+							end
+						end
+						if v:FindFirstChildWhichIsA("UICorner") then
+							local tween = game:GetService("TweenService"):Create(v:FindFirstChildWhichIsA("UICorner"), TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CornerRadius = UDim.new(0, 0)})
+							tween:Play()
+							tween.Completed:Connect(function()pcall(function()v:FindFirstChildWhichIsA("UICorner"):Destroy()end)end)
+						end
+					else
+						if v:FindFirstChildWhichIsA("UICorner") then
+							v:FindFirstChildWhichIsA("UICorner"):Destroy()
+						end
+						if v.Line then
+							v.Line.Size = UDim2.new(0, 2, 1, 0)
+							if v.Line:FindFirstChildWhichIsA("UICorner") then
+								v.Line:FindFirstChildWhichIsA("UICorner"):Destroy()
+							end
+						end
+						v.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+						v.PaddingModifier.PaddingLeft = UDim.new(0,0)
+						v.Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
+					end
+				end
+			end
+		end
+	elseif Type == "Corner" then
+		for i,v in pairs(UI.TableOfItems) do
+			if v and v.Parent and v:IsA("Frame") then
+				if not v:FindFirstChildWhichIsA("UICorner") then
+					local U = Instance.new("UICorner")
+					U.Parent = v
+					U.CornerRadius = UDim.new(0, 5)
+				end
+				if v.Line and not v.Line:FindFirstChildWhichIsA("UICorner") then
+					local U = Instance.new("UICorner")
+					U.CornerRadius = UDim.new(0, 0)
+					U.Parent = v.Line
+					if Table.Smooth ~= nil then
+						if Table.Smooth == true then
+							pcall(function()
+								game:GetService("TweenService"):Create(v.PaddingModifier, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {PaddingLeft = UDim.new(0,3)}):Play()
+								game:GetService("TweenService"):Create(U, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CornerRadius = UDim.new(0,5)}):Play()
+								game:GetService("TweenService"):Create(v.Line, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0,2, 0.7, 0)}):Play()
+								game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
+								game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
+							end)
+						else
+							v.PaddingModifier.PaddingLeft = UDim.new(0,3)
+							U.CornerRadius = UDim.new(0,5)
+							v.Line.Size = UDim2.new(0,2, 0.5, 0)
+							v.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+							v.Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
+						end
+					end
+				end
+			end
+		end
+	end
+end
 
 function UI:Clear()
 	pcall(function()
