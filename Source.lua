@@ -20,10 +20,10 @@ UI.Frame = Instance.new("Frame")
 UI.this_shit_is_not_funny = Instance.new("UIListLayout")
 UI.how = Instance.new("UIPadding")
 UI.Screen.Name = UI:randomString()
-UI.Screen.Parent = game:GetService("CoreGui")
+UI.Screen.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 UI.Screen.ZIndexBehavior = Enum.ZIndexBehavior.Global
 UI.Screen.ResetOnSpawn = false
-UI.Screen.OnTopOfCoreBlur = true
+--UI.Screen.OnTopOfCoreBlur = true
 UI.Screen.DisplayOrder = 999
 UI.wtf.Name = "wtf"
 UI.wtf.Parent = UI.Screen
@@ -94,22 +94,26 @@ local function compareByLength(a, b)
 end
 
 function UI:UpdateLayoutOrder()
-	local layouts = {}
-	for _, elements in pairs(UI.TableOfItems) do
-		local label = elements.Label
-		layouts[label.Text] = label
-	end
-	local sortedLabels = {}
-	for _, label in pairs(layouts) do
-		table.insert(sortedLabels, label)
-	end
-	table.sort(sortedLabels, function(a, b)
-		return string.len(a.Text) > string.len(b.Text)
+	pcall(function()
+		local layouts = {}
+		for _, elements in pairs(UI.TableOfItems) do
+			if elements and elements.Label then
+				local label = elements.Label
+				layouts[label.Text] = label
+			end
+		end
+		local sortedLabels = {}
+		for _, label in pairs(layouts) do
+			table.insert(sortedLabels, label)
+		end
+		table.sort(sortedLabels, function(a, b)
+			return string.len(a.Text) > string.len(b.Text)
+		end)
+		for index, label in ipairs(sortedLabels) do
+			local itemFrame = label.Parent
+			itemFrame.LayoutOrder = index - 1
+		end
 	end)
-	for index, label in ipairs(sortedLabels) do
-		local itemFrame = label.Parent
-		itemFrame.LayoutOrder = index - 1
-	end
 end
 
 UI.Loop = nil
