@@ -159,7 +159,7 @@ function UI:Refresh(Table)
 end
 
 function UI:Add(Name, Table)
-	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and not UI.TableOfItems[Name] then
+	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] == nil then
 		UI.TableOfItems[Name] = Instance.new("Frame")
 		local ItemLine = Instance.new("Frame")
 		local Label = Instance.new("TextLabel")
