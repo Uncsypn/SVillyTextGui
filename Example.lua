@@ -8,7 +8,7 @@ Library:Refresh({
 	PadLine = true,
 	Shadow = true,
 	Padding = 0,
-	Text = Library:DualStrings(Color3.fromRGB(85, 85, 85), {LLabel = "Raycat"}),
+	Text = Library:DualStrings(Color3.fromRGB(85, 85, 85), {LLabel = "TextUI"}),
 	Font = Enum.Font.GothamBold,
 	Color = Color3.fromRGB(255, 255, 255),
 })
