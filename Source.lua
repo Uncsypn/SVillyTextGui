@@ -1,6 +1,6 @@
-local UI = {}
+local Library = {}
 
-function UI:randomString()
+function randomString()
 	local randomlength = math.random(10,100)
 	local array = {}
 
@@ -11,69 +11,142 @@ function UI:randomString()
 	return table.concat(array)
 end
 
-UI.Screen = Instance.new("ScreenGui")
-UI.wtf = Instance.new("UIListLayout")
-UI.Main = Instance.new("Frame")
-UI.Label = Instance.new("TextLabel")
-UI.bro_stop = Instance.new("UIListLayout")
-UI.Frame = Instance.new("Frame")
-UI.this_shit_is_not_funny = Instance.new("UIListLayout")
-UI.how = Instance.new("UIPadding")
-UI.Screen.Name = UI:randomString()
-UI.Screen.Parent = game:GetService("CoreGui")
-UI.Screen.ZIndexBehavior = Enum.ZIndexBehavior.Global
-UI.Screen.ResetOnSpawn = false
-UI.Screen.OnTopOfCoreBlur = true
-UI.Screen.DisplayOrder = 999
-UI.wtf.Name = "wtf"
-UI.wtf.Parent = UI.Screen
-UI.wtf.SortOrder = Enum.SortOrder.LayoutOrder
-UI.wtf.VerticalAlignment = Enum.VerticalAlignment.Center
-UI.Main.Name = "Main"
-UI.Main.Parent = UI.Screen
-UI.Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-UI.Main.BackgroundTransparency = 1.000
-UI.Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
-UI.Main.BorderSizePixel = 0
-UI.Main.Size = UDim2.new(0.188335866, 0, 1, 0)
-UI.Label.Name = "Label"
-UI.Label.Parent = UI.Main
-UI.Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-UI.Label.BackgroundTransparency = 1.000
-UI.Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
-UI.Label.BorderSizePixel = 0
-UI.Label.Size = UDim2.new(1, 0, 0.0498938411, 0)
-UI.Label.Font = Enum.Font.Unknown
-UI.Label.Text = ""
-UI.Label.TextColor3 = Color3.fromRGB(255, 255, 255)
-UI.Label.TextScaled = true
-UI.Label.TextSize = 14.000
-UI.Label.TextStrokeTransparency = 0.850
-UI.Label.TextWrapped = true
-UI.Label.TextXAlignment = Enum.TextXAlignment.Left
-UI.Label.RichText = true
-UI.bro_stop.Name = "bro_stop"
-UI.bro_stop.Parent = UI.Main
-UI.bro_stop.SortOrder = Enum.SortOrder.LayoutOrder
-UI.Frame.Parent = UI.Main
-UI.Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-UI.Frame.BackgroundTransparency = 1.000
-UI.Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-UI.Frame.BorderSizePixel = 0
-UI.Frame.LayoutOrder = 1
-UI.Frame.Name = "LayoutMod"
-UI.Frame.Size = UDim2.new(1, 0, 1, 0)
-UI.this_shit_is_not_funny.Name = "this_shit_is_not_funny"
-UI.this_shit_is_not_funny.Parent = UI.Frame
-UI.this_shit_is_not_funny.SortOrder = Enum.SortOrder.LayoutOrder
-UI.how.Name = "how"
-UI.how.Parent = UI.Screen
-UI.how.PaddingBottom = UDim.new(0, 15)
-UI.how.PaddingLeft = UDim.new(0, 15)
-UI.how.PaddingTop = UDim.new(0, 15)
+local Settings = {
+	Enabled = false,
+	Visible = false,
+	PadLine = false,
+	Shadow = false,
+	Padding = 0,
+	Text = "",
+	Font = Enum.Font.Unknown,
+	Color = {
+		R = 255,
+		G = 255,
+		B = 255,
+	},
+	OrgWatermarkSize = nil,
+}
 
-UI.TableOfItems = {}
-UI.Settings = {Size = {isize=13,Padding=5,vsize=0.0218471342}}
+local TextGui = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local Padding = Instance.new("UIListLayout")
+local Label = Instance.new("TextLabel")
+local List = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+local Frame = Instance.new("Frame")
+local Frame_2 = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local UIListLayout_2 = Instance.new("UIListLayout")
+local UICorner_2 = Instance.new("UICorner")
+local NO_NOT_CHANGE = Instance.new("UIListLayout")
+local NO_NOT_CHANGE_2 = Instance.new("UIPadding")
+TextGui.Name = randomString()
+TextGui.Parent = game:GetService("CoreGui")
+TextGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+TextGui.ResetOnSpawn = false
+TextGui.Enabled = Settings.Enabled
+TextGui.OnTopOfCoreBlur = true
+TextGui.DisplayOrder = 999
+Main.Name = randomString()
+Main.Parent = TextGui
+Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Main.BackgroundTransparency = 1.000
+Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Main.BorderSizePixel = 0
+Main.Size = UDim2.new(0.149837136, 0, 1, 0)
+Padding.Name = randomString()
+Padding.Parent = Main
+Padding.SortOrder = Enum.SortOrder.LayoutOrder
+Padding.Padding = UDim.new(0, 9)
+Label.Name = randomString()
+Label.Visible = Settings.Visible
+Label.Parent = Main
+Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Label.BackgroundTransparency = 1.000
+Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Label.BorderSizePixel = 0
+Label.Size = UDim2.new(1, 0, 0.0372611545, 0)
+Settings.OrgWatermarkSize = Label.Size
+Label.Font = Settings.Font
+Label.Text = Settings.Text
+Label.TextColor3 = Color3.fromRGB(Settings.Color.R, Settings.Color.G, Settings.Color.B)
+Label.TextScaled = true
+Label.TextSize = 100.000
+Label.TextWrapped = true
+Label.TextXAlignment = Enum.TextXAlignment.Left
+Label.TextStrokeTransparency = Settings.Shadow == true and 0.7 or 1
+Label.RichText = true
+List.Name = randomString()
+List.Parent = Main
+List.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+List.BackgroundTransparency = 1.000
+List.BorderColor3 = Color3.fromRGB(0, 0, 0)
+List.BorderSizePixel = 0
+List.LayoutOrder = 2
+List.Position = UDim2.new(0, 0, 0.0500000082, 0)
+List.Size = UDim2.new(1, 0, 1, 0)
+UIListLayout.Parent = List
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, Settings.Padding)
+UIListLayout.Name = randomString()
+Frame.Parent = Main
+Frame.Visible = Settings.PadLine
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.LayoutOrder = 1
+Frame.Size = UDim2.new(1, 0, 0, 5)
+Frame.Name = randomString()
+Frame_2.Parent = Frame
+Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame_2.BorderSizePixel = 0
+Frame_2.Size = UDim2.new(0, 10, 0, 10)
+Frame_2.Name = randomString()
+UICorner.CornerRadius = UDim.new(1, 1)
+UICorner.Parent = Frame_2
+UICorner.Name = randomString()
+UIListLayout_2.Parent = Frame
+UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+UIListLayout_2.Name = randomString()
+UIListLayout_2.SortOrder = Enum.SortOrder.Name
+UICorner_2.CornerRadius = UDim.new(1, 1)
+UICorner_2.Parent = Frame
+UICorner_2.Name = randomString()
+NO_NOT_CHANGE.Name = "NO_NOT_CHANGE-"..randomString()
+NO_NOT_CHANGE.Parent = TextGui
+NO_NOT_CHANGE.SortOrder = Enum.SortOrder.LayoutOrder
+NO_NOT_CHANGE_2.Name = "NO_NOT_CHANGE-"..randomString()
+NO_NOT_CHANGE_2.Parent = TextGui
+NO_NOT_CHANGE_2.PaddingBottom = UDim.new(0, 15)
+NO_NOT_CHANGE_2.PaddingLeft = UDim.new(0, 15)
+NO_NOT_CHANGE_2.PaddingRight = UDim.new(0, 15)
+NO_NOT_CHANGE_2.PaddingTop = UDim.new(0, 15)
+
+local ItemsList = {}
+
+function UpdateLayoutOrder()
+	local textLengths = {}
+	for _, v in pairs(ItemsList) do
+		if v ~= nil and v:FindFirstChildWhichIsA("TextLabel") then
+			local textLabel = v:FindFirstChildWhichIsA("TextLabel")
+			local text = textLabel.Text
+			local length = string.len(text)
+			table.insert(textLengths, {Item = v, Length = length})
+		end
+	end
+
+	table.sort(textLengths, function(a, b)
+		return a.Length > b.Length
+	end)
+	
+	for i, info in ipairs(textLengths) do
+		if info.Item ~= nil and info.Item:IsA("Frame") then
+			info.Item.LayoutOrder = i - 1
+		end
+	end
+end
 
 function DualStringHandler(color3)
 	if color3 then
@@ -81,7 +154,7 @@ function DualStringHandler(color3)
 	end
 end
 
-function UI:DualStrings(Color, Table)
+function Library:DualStrings(Color, Table)
 	if Table.RLabel then
 		return string.format("%s <font color='%s'>%s</font>", Table.LLabel or "", DualStringHandler(Color), Table.RLabel or "")
 	else
@@ -89,317 +162,123 @@ function UI:DualStrings(Color, Table)
 	end
 end
 
-local function compareByLength(a, b)
-	return string.len(a) > string.len(b)
+function Library:Refresh(Table)
+	if Table.Enabled ~= nil and type(Table.Enabled) == "boolean" then TextGui.Enabled = Table.Enabled end
+	if Table.Watermark ~= nil and type(Table.Watermark) == "boolean" then Label.Visible = Table.Watermark end
+	if Table.Shadow ~= nil and type(Table.Shadow) == "boolean" then Label.TextStrokeTransparency = Table.Shadow == true and 0.7 or 1 end
+	if Table.Text ~= nil and type(Table.Text) == "string" then Label.Text = Table.Text end
+	if Table.Font ~= nil then Label.Font = Table.Font end
+	if Table.Color ~= nil then Label.TextColor3 = Table.Color end
+	if Table.PadLine ~= nil and  type(Table.PadLine) == "boolean" then Frame.Visible = Table.PadLine end
 end
 
-function UI:UpdateLayoutOrder()
-	pcall(function()
-		local layouts = {}
-		for _, elements in pairs(UI.TableOfItems) do
-			if elements and elements.Label then
-				local label = elements.Label
-				layouts[label.Text] = label
-			end
-		end
-		local sortedLabels = {}
-		for _, label in pairs(layouts) do
-			table.insert(sortedLabels, label)
-		end
-		table.sort(sortedLabels, function(a, b)
-			return string.len(a.Text) > string.len(b.Text)
-		end)
-		for index, label in ipairs(sortedLabels) do
-			local itemFrame = label.Parent
-			itemFrame.LayoutOrder = index - 1
-		end
-	end)
-end
-
-UI.Loop = nil
-
-function UI:RefreshLayoutOrder(Bool)
-	if Bool == true then
-		UI.Loop = game:GetService("RunService").Heartbeat:Connect(function()
-			UI:UpdateLayoutOrder()
-		end)
-	elseif Bool == false then
-		if UI.Loop ~= nil then
-			UI.Loop:Disconnect()
-			UI.Loop = nil
+function Library:Add(Name, Table)
+	if List and List.Parent and Name ~= ("" or nil) and type(Name) == "string" and ItemsList[Name] == nil then
+		local Item = Instance.new("Frame")
+		ItemsList[Name] = Item
+		local Line = Instance.new("Frame")
+		local Keep = Instance.new("UIListLayout")
+		local TextLabel = Instance.new("TextLabel")
+		local Keep_2 = Instance.new("UIStroke")
+		Item.Name = randomString()
+		Item.Parent = List
+		Item.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+		Item.BackgroundTransparency = Table.Background ~= nil and type(Table.Background) == "boolean" and Table.Background == true and 0.9 or Table.Background ~= nil and type(Table.Background) == "boolean" and Table.Background == false and 1 or 1
+		Item.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Item.BorderSizePixel = 0
+		Item.Size = UDim2.new(0, 0, 0.029, 0)
+		Item.ClipsDescendants = true
+		Line.Name = randomString()
+		Line.Parent = Item
+		Line.BackgroundColor3 = Color3.fromRGB(255, 200, 255)
+		Line.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Line.BorderSizePixel = 0
+		Line.Size = UDim2.new(0, 3, 1, 0)
+		Keep.Name = randomString()
+		Keep.Parent = Item
+		Keep.FillDirection = Enum.FillDirection.Horizontal
+		Keep.SortOrder = Enum.SortOrder.LayoutOrder
+		Keep.VerticalAlignment = Enum.VerticalAlignment.Center
+		Keep.Padding = UDim.new(0, 6)
+		TextLabel.Parent = Item
+		TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel.BackgroundTransparency = 1.000
+		TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Size = UDim2.new(1, 0, 0.800000012, 0)
+		TextLabel.Font = Table.Font ~= nil and Table.Font or Enum.Font.Unknown
+		TextLabel.RichText = true
+		TextLabel.Text = Table.Text ~= nil and type(Table.Text) == "string" and Table.Text or ""
+		TextLabel.TextColor3 = Table.Color ~= nil and Table.Color or Color3.fromRGB(255, 255, 255)
+		TextLabel.TextSize = 14.000
+		TextLabel.TextStrokeTransparency = Table.Shadow ~= nil and type(Table.Shadow) == "boolean" and Table.Shadow == true and 0.8 or Table.Shadow ~= nil and type(Table.Shadow) == "boolean" and Table.Shadow == false and 1 or 1
+		TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+		TextLabel.Name = randomString()
+		Keep_2.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+		Keep_2.Thickness = 1.300
+		Keep_2.Transparency = Table.StrokeShadow ~= nil and type(Table.StrokeShadow) == "boolean" and Table.StrokeShadow == true and 0.8 or Table.StrokeShadow ~= nil and type(Table.StrokeShadow) == "boolean" and Table.StrokeShadow == false and 1 or 1
+		Keep_2.Parent = Item
+		Keep_2.Name = randomString()
+		if Table.Smooth ~= nil and type(Table.Smooth) == "boolean" and Table.Smooth == true then
+			game:GetService("TweenService"):Create(Item, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, TextLabel.TextBounds.X + 17, 0.029, 0)}):Play()
+		else
+			Item.Size = UDim2.new(0, TextLabel.TextBounds.X + 17, 0.029, 0)
 		end
 	end
 end
 
-function UI:Refresh(Table)
-	if UI.Label then
-		if Table.Text then
-			UI.Label.Text = Table.Text
-		end
-		if Table.Shadow ~= nil then
-			if Table.Shadow == true then
-				UI.Label.TextStrokeTransparency = 0.85
-			else
-				UI.Label.TextStrokeTransparency = 1
-			end
-		end
-		if Table.Color then
-			UI.Label.TextColor3 = Table.Color
-		end
-		if Table.Visible ~= nil then
-			UI.Label.Visible = Table.Visible
-		end
-		if Table.Enabled ~= nil then
-			UI.Screen.Enabled = Table.Enabled
-		end
-		if Table.Font then
-			UI.Label.Font = Table.Font
+function Library:Update(Name, Table)
+	if List and List.Parent and Name ~= ("" or nil) and type(Name) == "string" and ItemsList[Name] ~= nil then
+		local Item = ItemsList[Name]
+		local Line = ItemsList[Name]:FindFirstChildWhichIsA("Frame")
+		local TextLabel = ItemsList[Name]:FindFirstChildWhichIsA("TextLabel")
+		local Keep_2 = ItemsList[Name]:FindFirstChildWhichIsA("UIStroke")
+		Item.BackgroundTransparency = Table.Background ~= nil and type(Table.Background) == "boolean" and Table.Background == true and 0.9 or Table.Background ~= nil and type(Table.Background) == "boolean" and Table.Background == false and 1 or Item.BackgroundTransparency
+		TextLabel.Font = Table.Font ~= nil and Table.Font or TextLabel.Font
+		TextLabel.Text = Table.Text ~= nil and type(Table.Text) == "string" and Table.Text or TextLabel.Text
+		TextLabel.TextColor3 = Table.Color ~= nil and Table.Color or TextLabel.TextColor3
+		TextLabel.TextStrokeTransparency = Table.Shadow ~= nil and type(Table.Shadow) == "boolean" and Table.Shadow == true and 0.8 or Table.Shadow ~= nil and type(Table.Shadow) == "boolean" and Table.Shadow == false and 1 or TextLabel.TextStrokeTransparency
+		Keep_2.Transparency = Table.StrokeShadow ~= nil and type(Table.StrokeShadow) == "boolean" and Table.StrokeShadow == true and 0.8 or Table.StrokeShadow ~= nil and type(Table.StrokeShadow) == "boolean" and Table.StrokeShadow == false and 1 or Keep_2.Transparency
+		if Table.Smooth ~= nil and type(Table.Smooth) == "boolean" and Table.Smooth == true then
+			game:GetService("TweenService"):Create(Item, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, TextLabel.TextBounds.X + 17, 0.029, 0)}):Play()
+		else
+			Item.Size = UDim2.new(0, TextLabel.TextBounds.X + 17, 0.029, 0)
 		end
 	end
 end
 
-function UI:Add(Name, Table)
-	if Name and Name ~= ("" or nil) and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] == nil then
-		UI.TableOfItems[Name] = Instance.new("Frame")
-		local ItemLine = Instance.new("Frame")
-		local Label = Instance.new("TextLabel")
-		local LayoutModifier = Instance.new("UIListLayout")
-		local PaddingModifier = Instance.new("UIPadding")
-		UI.TableOfItems[Name].Name = Name
-		UI.TableOfItems[Name].Parent = UI.Frame
-		UI.TableOfItems[Name].BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-		if Table.Background ~= nil then
-			if Table.Background == true then
-				UI.TableOfItems[Name].BackgroundTransparency = 0.650
-			else
-				UI.TableOfItems[Name].BackgroundTransparency = 1
-			end
-		end
-		UI.TableOfItems[Name].BorderColor3 = Color3.fromRGB(0, 0, 0)
-		UI.TableOfItems[Name].BorderSizePixel = 0
-		UI.TableOfItems[Name].Position = UDim2.new(0, 0, -0.00106157118, 0)
-		UI.TableOfItems[Name].Size = UDim2.new(0, 0, 0, 0)
-		UI.TableOfItems[Name].ClipsDescendants = true
-		ItemLine.Parent = UI.TableOfItems[Name]
-		ItemLine.BackgroundColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
-		ItemLine.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		ItemLine.BorderSizePixel = 0
-		ItemLine.Size = UDim2.new(0, 2, 1, 0)
-		ItemLine.Name = "Line"
-		ItemLine.LayoutOrder = 0
-		Label.Parent = UI.TableOfItems[Name]
-		Label.Text = Table.Text or ""
-		Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		Label.BackgroundTransparency = 1.000
-		Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		Label.BorderSizePixel = 0
-		Label.Position = UDim2.new(0.103448279, 0, 0, 0)
-		Label.Size = UDim2.new(1, 0, 1, 0)
-		Label.Font = Table.Font or Enum.Font.Unknown
-		Label.TextColor3 = Table.Color or Color3.fromRGB(255, 255, 255)
-		Label.TextSize = 14.000
-		Label.Name = "Label"
-		Label.RichText = true
-		Label.LayoutOrder = 1
-		if Table.Shadow ~= nil then
-			if Table.Shadow == true then
-				Label.TextStrokeTransparency = 0.850
-			else
-				Label.TextStrokeTransparency = 1
-			end
-		end
-		Label.TextXAlignment = Enum.TextXAlignment.Left
-		LayoutModifier.Parent = UI.TableOfItems[Name]
-		LayoutModifier.FillDirection = Enum.FillDirection.Horizontal
-		LayoutModifier.SortOrder = Enum.SortOrder.LayoutOrder
-		LayoutModifier.VerticalAlignment = Enum.VerticalAlignment.Center
-		LayoutModifier.Padding = UDim.new(0, UI.Settings.Size.Padding)
-		PaddingModifier.Name = "PaddingModifier"
-		PaddingModifier.Parent = UI.TableOfItems[Name]
-
-		if Table.Order then
-			if tonumber(Table.Order) then
-				UI.TableOfItems[Name].LayoutOrder = Table.Order
-			elseif Table.Order == "Manual" then
-				UI:UpdateLayoutOrder()
-			end
-		end
-
-		if Table.Smooth ~= nil then
-			if Table.Smooth == true then
-				UI.TableOfItems[Name].Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)
-				game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, Label.TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
-			else
-				UI.TableOfItems[Name].Size = UDim2.new(0, Label.TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
-			end
-		end
-	end
-end
-
-function UI:Update(Name, Table)
-	if Name and UI.Frame and UI.Frame.Parent and UI.TableOfItems[Name] then
-		if Table.Background ~= nil then
-			if Table.Background == true then
-				UI.TableOfItems[Name].BackgroundTransparency = 0.650
-			else
-				UI.TableOfItems[Name].BackgroundTransparency = 1
-			end
-		end
-		if Table.Color then
-			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
-			local line = UI.TableOfItems[Name]:FindFirstChild("Line")
-			if label then
-				label.TextColor3 = Table.Color
-			end
-			if line then
-				line.BackgroundColor3 = Table.Color
-			end
-		end
-		if Table.Font then
-			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
-			if label then
-				label.Font = Table.Font
-			end
-		end
-		if Table.Shadow ~= nil then
-			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
-			if label then
-				if Table.Shadow == true then
-					label.TextStrokeTransparency = 0.850
-				else
-					label.TextStrokeTransparency = 1
-				end
-			end
-		end
-		if Table.Text then
-			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
-			if label then
-				label.Text = Table.Text
-			end
-		end
-		if Table.Order then
-			if tonumber(Table.Order) then
-				UI.TableOfItems[Name].LayoutOrder = Table.Order
-			elseif Table.Order == "Manual" then
-				UI:UpdateLayoutOrder()
-			end
-		end
-		pcall(function()
-			local label = UI.TableOfItems[Name]:FindFirstChild("Label")
-			if label then
-				if Table.Smooth ~= nil then
-					if Table.Smooth == true then
-						game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, UI.TableOfItems[Name]:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
-					else
-						UI.TableOfItems[Name].Size = UDim2.new(0, UI.TableOfItems[Name]:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
-					end
-				end
-			end
-		end)
-	else
-		-- warn("Item Does Not Exist:", Name or nil)
-	end
-end
-
-function UI:Remove(Name, Table)
-	local Target = UI.TableOfItems[Name]
-	if Name and Name ~= "" and UI.Frame and UI.Frame.Parent and Target then
-		if Table.Smooth == true then
-			local tween = game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)})
-			tween:Play()
-			tween.Completed:Connect(function()
-				pcall(function()
-					if Target then
-						game:GetService("TweenService"):Create(UI.TableOfItems[Name], TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0)}):Play()
-						wait(0.05)
-						Target:Destroy()
-						Target = nil
-					end
-				end)
+function Library:Remove(Name, Table)
+	if Name ~= ("" or nil) and type(Name) == "string" and ItemsList[Name] ~= nil then
+		local Target = ItemsList[Name]
+		if Table.Smooth ~= nil and type(Table.Smooth) == "boolean" and Table.Smooth == true then
+			local Goal = game:GetService("TweenService"):Create(Target, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0.029, 0)})
+			Goal:Play()
+			Goal.Completed:Connect(function()
+				Target:Destroy()
+				ItemsList[Name] = nil
 			end)
 		else
 			Target:Destroy()
-			UI.TableOfItems[Name] = nil
+			ItemsList[Name] = nil
 		end
 	end
 end
 
-function UI:UpdateAll(Table)
-	for i,v in pairs(UI.TableOfItems) do
-		if v and v.Parent and v:IsA("Frame") then
-			if Table.Background ~= nil then
-				if Table.Background == true then
-					v.BackgroundTransparency = 0.650
-				else
-					v.BackgroundTransparency = 1
-				end
-			end
-			if Table.Color then
-				local label = v:FindFirstChild("Label")
-				local line = v:FindFirstChild("Line")
-				if label then
-					label.TextColor3 = Table.Color
-				end
-				if line then
-					line.BackgroundColor3 = Table.Color
-				end
-			end
-			if Table.Font then
-				local label = v:FindFirstChild("Label")
-				if label then
-					label.Font = Table.Font
-				end
-			end
-			if Table.Shadow ~= nil then
-				local label = v:FindFirstChild("Label")
-				if label then
-					if Table.Shadow == true then
-						label.TextStrokeTransparency = 0.850
-					else
-						label.TextStrokeTransparency = 1
-					end
-				end
-			end
-			if Table.Order then
-				if tonumber(Table.Order) then
-					v.LayoutOrder = Table.Order
-				elseif Table.Order == "Manual" then
-					UI:UpdateLayoutOrder()
-				end
-			end
-			pcall(function()
-				local label = v:FindFirstChild("Label")
-				if label then
-					if Table.Smooth ~= nil then
-						if Table.Smooth == true then
-							game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
-						else
-							v.Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
-						end
-					end
-				end
-			end)
-		end
-	end
-end
-
-function UI:RemoveAll(Table)
-	for i,v in pairs(UI.TableOfItems) do
-		if v and v.Parent and v:IsA("Frame") then
-			if Table.Smooth == true then
-				local tween = game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, UI.Settings.Size.vsize, 0)})
-				tween:Play()
-				tween.Completed:Connect(function()
-					pcall(function()
-						if v then
-							game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0)}):Play()
-							wait(0.05)
-							v:Destroy()
-							v = nil
-						end
-					end)
+function Library:RemoveAll(Table)
+	if Table.Smooth ~= nil and type(Table.Smooth) == "boolean" and Table.Smooth == true then
+		for _,v in pairs(ItemsList) do
+			if v ~= nil and v:IsA("Frame") then
+				local Goal = game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0.029, 0)})
+				Goal:Play()
+				Goal.Completed:Connect(function()
+					v:Destroy()
+					v = nil
 				end)
-			else
+			end
+		end
+	else
+		for _,v in pairs(ItemsList) do
+			if v ~= nil and v:IsA("Frame") then
 				v:Destroy()
 				v = nil
 			end
@@ -407,86 +286,25 @@ function UI:RemoveAll(Table)
 	end
 end
 
-function UI:Design(Type, Table)
-	if Type == "Basic" then
-		for i,v in pairs(UI.TableOfItems) do
-			if v and v.Parent and v:IsA("Frame") then
-				if Table.Smooth ~= nil then
-					if Table.Smooth == true then
-						game:GetService("TweenService"):Create(v.PaddingModifier, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {PaddingLeft = UDim.new(0,0)}):Play()
-						game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
-						game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
-						if v.Line then
-							game:GetService("TweenService"):Create(v.Line, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 2, 1, 0)}):Play()
-							if v.Line:FindFirstChildWhichIsA("UICorner") then
-								local tween = game:GetService("TweenService"):Create(v.Line:FindFirstChildWhichIsA("UICorner"), TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CornerRadius = UDim.new(0, 0)})
-								tween:Play()
-								tween.Completed:Connect(function()pcall(function()v.Line:FindFirstChildWhichIsA("UICorner"):Destroy()end)end)
-							end
-						end
-						if v:FindFirstChildWhichIsA("UICorner") then
-							local tween = game:GetService("TweenService"):Create(v:FindFirstChildWhichIsA("UICorner"), TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CornerRadius = UDim.new(0, 0)})
-							tween:Play()
-							tween.Completed:Connect(function()pcall(function()v:FindFirstChildWhichIsA("UICorner"):Destroy()end)end)
-						end
-					else
-						if v:FindFirstChildWhichIsA("UICorner") then
-							v:FindFirstChildWhichIsA("UICorner"):Destroy()
-						end
-						if v.Line then
-							v.Line.Size = UDim2.new(0, 2, 1, 0)
-							if v.Line:FindFirstChildWhichIsA("UICorner") then
-								v.Line:FindFirstChildWhichIsA("UICorner"):Destroy()
-							end
-						end
-						v.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-						v.PaddingModifier.PaddingLeft = UDim.new(0,0)
-						v.Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
-					end
-				end
-			end
-		end
-	elseif Type == "Corner" then
-		for i,v in pairs(UI.TableOfItems) do
-			if v and v.Parent and v:IsA("Frame") then
-				if not v:FindFirstChildWhichIsA("UICorner") then
-					local U = Instance.new("UICorner")
-					U.Parent = v
-					U.CornerRadius = UDim.new(0, 5)
-				end
-				if v.Line and not v.Line:FindFirstChildWhichIsA("UICorner") then
-					local U = Instance.new("UICorner")
-					U.CornerRadius = UDim.new(0, 0)
-					U.Parent = v.Line
-					if Table.Smooth ~= nil then
-						if Table.Smooth == true then
-							pcall(function()
-								game:GetService("TweenService"):Create(v.PaddingModifier, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {PaddingLeft = UDim.new(0,3)}):Play()
-								game:GetService("TweenService"):Create(U, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CornerRadius = UDim.new(0,5)}):Play()
-								game:GetService("TweenService"):Create(v.Line, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0,2, 0.7, 0)}):Play()
-								game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
-								game:GetService("TweenService"):Create(v, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)}):Play()
-							end)
-						else
-							v.PaddingModifier.PaddingLeft = UDim.new(0,3)
-							U.CornerRadius = UDim.new(0,5)
-							v.Line.Size = UDim2.new(0,2, 0.5, 0)
-							v.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-							v.Size = UDim2.new(0, v:FindFirstChild("Label").TextBounds.X + UI.Settings.Size.isize, UI.Settings.Size.vsize, 0)
-						end
-					end
-				end
-			end
+local Connection = nil
+function Library:AutoUpdateLayout(Bool)
+	if Bool ~= nil and type(Bool) == "boolean" then
+		if Bool == true then
+			UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+			Connection = game:GetService("RunService").PreRender:Connect(UpdateLayoutOrder)
+		elseif Bool == false then
+			if Connection ~= nil then Connection:Disconnect() Connection = nil end
+			UIListLayout_2.SortOrder = Enum.SortOrder.Name
 		end
 	end
 end
 
-function UI:Clear()
-	pcall(function()
-		UI:RefreshLayoutOrder(false)
-		table.clear(UI.TableOfItems)
-		UI.Screen:Destroy()
-	end)
+function Library:Clear()
+	if TextGui ~= nil then
+		TextGui:Destroy()
+		if Connection ~= nil then Connection:Disconnect() end
+		table.clear(ItemsList)
+	end
 end
 
-return UI
+return Library
