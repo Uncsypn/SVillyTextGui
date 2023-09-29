@@ -1,49 +1,47 @@
 -- Define Library.
-local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Uncsypn/SVillyTextGui/main/Source.lua"))()
-
--- Custom Settings.
-UI.Settings = {Size = {isize=13,Padding=5,vsize=0.0218471342}}
+local Library = require(script:WaitForChild("ModuleScript"))
 
 -- Update Window.
-UI:Refresh({
+Library:Refresh({
 	Enabled = true,
-	Visible = true,
+	Watermark = true,
+	PadLine = true,
 	Shadow = true,
+	Padding = 0,
+	Text = Library:DualStrings(Color3.fromRGB(85, 85, 85), {LLabel = "Raycat"}),
+	Font = Enum.Font.GothamBold,
 	Color = Color3.fromRGB(255, 255, 255),
-	Font = Enum.Font.SourceSansBold,
-	Text = UI:DualStrings(Color3.fromRGB(255, 0, 0), {LLabel = "Text", RLabel = "Gui"}),
 })
 
 -- Add Item.
-UI:Add("Item",{
-	Background = true,
-	Shadow = true,
-	Smooth = false,
-	Color = Color3.fromRGB(255, 255, 255),
-	Order = "Manual",
+Library:Add("Item", {
+	Text = Library:DualStrings(Color3.fromRGB(255, 255, 255), {LLabel = "LeftStr", RLabel = "RightStr"}),
+	Color = Color3.new(1, 0, 0),
 	Font = Enum.Font.SourceSans,
-	Text = UI:DualStrings(Color3.fromRGB(255, 0, 0), {LLabel = "String1", RLabel = "String2"}),
-})
-
--- Update Item.
-UI:Update("Item",{
+	StrokeShadow = false,
 	Background = true,
 	Shadow = false,
 	Smooth = true,
-	Color = Color3.fromRGB(255, 0, 0),
-	Order = 1,
-	Font = Enum.Font.SourceSansSemibold,
-	Text = "String3",
+})
+
+-- Update Item.
+Library:Update("Item", {
+	Text = Library:DualStrings(Color3.fromRGB(255, 0, 0), {LLabel = "OnlyStr"}),
+	Color = Color3.new(1, 1, 1),
+	Font = Enum.Font.SourceSansBold,
+	StrokeShadow = true,
+	Background = false,
+	Shadow = true,
+	Smooth = false,
 })
 
 -- Remove Item.
-UI:Remove("Item", {Smooth = true})
+Library:Remove("Item", {
+	Smooth = true,
+})
 
--- Update LayoutOrder.
-UI:UpdateLayoutOrder()
+-- Remove All Items.
+Library:RemoveAll({Smooth = true})
 
--- Loop LayoutOrder.
-UI:RefreshLayoutOrder(true)
-
--- Deletes UI.
-UI:Clear()
+-- Auto LayoutOrder.
+Library:AutoUpdateLayout(true)
