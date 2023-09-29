@@ -1,5 +1,5 @@
 -- Define Library.
-local Library = require(script:WaitForChild("ModuleScript"))
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Uncsypn/SVillyTextGui/main/Source.lua"))()
 
 -- Update Window.
 Library:Refresh({
